@@ -28,14 +28,17 @@
 	</appender>
 
 
-	<logger name="com.busap.cctv" level="info" additivity="false">
+	<logger name="net.busonline" level="debug" additivity="false">
 		<appender-ref ref="logfile" />
 		<appender-ref ref="stdout" />
 	</logger>
-	<logger name="org.springframework" level="info"  additivity="false">
+	<logger name="org.springframework" level="debug"  additivity="false">
 		<appender-ref ref="stdout" />
 	</logger>
-	
+	<!-- <logger name="net.busonline.api.dao" level="DEBUG">
+	<appender-ref ref="logfile" />
+		<appender-ref ref="stdout" />
+</logger>  -->
 	<!-- jdbc -->
 	 <logger name="org.springframework.jdbc.core.JdbcTemplate" additivity="false" level="DEBUG">
         <appender-ref ref="stdout" />
@@ -51,5 +54,7 @@
 		<level value="info" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="logfile" />
+	 
 	</root>
+	
 </configuration>
