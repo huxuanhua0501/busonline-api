@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:redis="http://www.springframework.org/schema/redis"
+
+	xsi:schemaLocation="
+ http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+ http://www.springframework.org/schema/cache 
+ http://www.springframework.org/schema/cache/spring-cache.xsd
+ http://www.springframework.org/schema/redis 
+ http://www.springframework.org/schema/redis/spring-redis-1.0.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/tx
+ http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+ http://www.springframework.org/schema/aop
+ http://www.springframework.org/schema/aop/spring-aop.xsd
+ http://www.springframework.org/schema/jdbc 
+ http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+ http://www.springframework.org/schema/jee
+  http://www.springframework.org/schema/jee/spring-jee-4.2.xsd"
+ 
+	default-lazy-init="true">
+
+ 
+ <context:annotation-config/>
+	<context:component-scan base-package="net.**.service" />
+	<context:component-scan base-package="net.**.util" />
+	
+ 	<!-- 配置数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc_url}" />
+		<property name="username" value="${jdbc_username}" />
+		<property name="password" value="${jdbc_password}" />
+
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${jdbc_initialSize}" />
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="${jdbc_maxActive}" />
+		<!-- 连接池最大空闲 -->
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="0" />
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="60000" />
+
+		<property name="validationQuery" value="${validationQuery}" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 1800秒，也就是30分钟 -->
+		<property name="removeAbandonedTimeout" value="1800" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+
+		<!-- 监控数据库 -->
+		<!-- <property name="filters" value="stat" /> -->
+		<property name="filters" value="mergeStat,log4j" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"
+		scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+ <!-- 使用自动扫描包的方式来注册各种Mapper ，配置如下： -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="net.**.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<!-- <tx:method name="query*" read-only="true" /> -->
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!--把事务控制在Service层-->
+		<aop:pointcut id="allServiceMethod"
+			expression="execution(* net.busonline.*.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethod" />
+	</aop:config>
+	<!-- 注解方式配置事物 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+			<!-- *********************redis相关配置*************************** -->
+ 	<bean id="redisService" class="net.busonline.core.redis.RedisServiceImpl"/>
+	<context:property-placeholder location="classpath:/redis.properties"
+	ignore-unresolvable="true" />
+	<bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig"> 
+		<property name="maxTotal" value="${redis_max_active}"></property>
+		<property name="maxIdle" value="${redis_max_idle}"></property>
+		<property name="maxWaitMillis" value="${redis_max_wait}"></property>
+		<property name="testOnBorrow" value="${redis_test_on_borrow}"></property>
+	</bean>
+	<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis_addr}"></property>
+		<property name="port" value="${redis_port}"></property>
+		<property name="password" value="${redis_auth}"></property>
+		<property name="poolConfig" ref="jedisConfig"></property>
+		<property name="database" value="${redis_database}"></property>
+	</bean>
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<!-- 如果不配置Serializer，那么存储的时候智能使用String，如果用User类型存储，那么会提示错误User can't cast to String！！！ -->
+		<property name="keySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="valueSerializer">
+			<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+		</property>
+	</bean>	
+	
+	<!--   <bean id="redisConstant" class="net.busonline.core.redis.RedisConstant">
+		<constructor-arg>
+   			<map>
+   				<entry key="recordCache" value="6000" />
+   			</map>
+  		</constructor-arg>
+	</bean>   -->
+	<!-- *********************redis相关配置*************************** -->
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- httpClient连接池 -->
+	<bean id="pollingConnectionManager"
+		class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+		<property name="maxTotal" value="200" />
+		<property name="defaultMaxPerRoute" value="20" />
+	</bean>
+
+	<!-- 使用httpbuilder构造合适的http方法 -->
+	<bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"
+		factory-method="create">
+		<property name="connectionManager" ref="pollingConnectionManager" />
+	</bean>
+
+	<bean id="httpClient" factory-bean="httpClientBuilder"
+		factory-method="build" />
+	
+	<!-- 配置httpClient的连接工厂 -->
+	<bean id="clientHttpRequestFactory"
+		class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+		<constructor-arg ref="httpClient" />
+		<property name="connectTimeout" value="10000" />
+		<property name="readTimeout" value="10000" />
+	</bean>
+	
+	
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="${config.redis.pool.maxIdle}" />
+		<property name="maxTotal" value="${config.redis.pool.maxTotal}" />
+		<property name="maxWaitMillis" value="${config.redis.pool.maxWaitMillis}" />
+		<property name="testOnBorrow" value="${config.redis.pool.testOnBorrow}" />
+		<property name="testOnReturn" value="${config.redis.pool.testOnReturn}" />
+	</bean>
+
+	
+	
+	<beans profile="dev">
+		<context:property-placeholder location="classpath*:/config_develop.properties"
+			ignore-unresolvable="true" />
+	</beans>
+
+	<beans profile="prod">
+		<context:property-placeholder
+			location="classpath*:/config_production.properties"
+			ignore-unresolvable="true" />
+	</beans>
+	<beans profile="test">
+		<context:property-placeholder location="classpath*:/config_test.properties"
+			ignore-unresolvable="true" />
+	</beans>
+</beans>
