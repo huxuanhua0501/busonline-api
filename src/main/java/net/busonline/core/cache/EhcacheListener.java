@@ -11,13 +11,28 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import net.busonline.api.service.InitCacheService;
 import net.busonline.core.redis.RedisServiceImpl;
-
+/**
+ * 预加载签名信息
+ * @version 1.0.0
+ * @2016-7-23
+ * @author xuanhua.hu
+ *
+ */
 public class EhcacheListener implements ServletContextListener {
-	 
+	//cache层
 	private RedisServiceImpl redisService;
 	// 获取spring注入的bean对象
 	private WebApplicationContext springContext;
-
+ 
+	
+	/**
+	 * 预加载签名信息，为企业调取接口时需要先验证这些签名信息
+	 *  需要提供sign(32,md5加密),目前只有百度
+	 * @version 1.0.0
+	 * @2016-7-23
+	 * @author xuanhua.hu
+	 *
+	 */
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		// TODO Auto-generated method stub
@@ -26,6 +41,7 @@ public class EhcacheListener implements ServletContextListener {
 		List<Map<String,Object>> list = ((InitCacheService) springContext.getBean("initCacheService")).getAllSign();
 		for(int i = 0 ;i<list.size();i++){
 			Map<String,Object>map = list.get(i);
+			//存放的格式
 			redisService.put("sign", map.get("sign").toString(), map);
 		}
 
