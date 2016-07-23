@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.busonline.api.dao.SignMapper">
+	<select id="getAllSign" resultType="java.util.Map">
+		SELECT
+			s.e_sign AS sign,
+			bl.line_id AS lineId,
+			c.name_en AS city
+		FROM
+			sign s
+		LEFT JOIN sign_line sl ON s.id = sl.sign_id
+		LEFT JOIN bus_line bl ON sl.line_id = bl.id
+		LEFT JOIN city  c ON bl.city_id = c.id
+	</select>
+</mapper>

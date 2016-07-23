@@ -24,7 +24,7 @@ public class OneService implements IOneService {
 	@Override
 	public List<Map<String, Object>> select() {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>> list = oneMapper.getOneById("1");
+		//List<Map<String, Object>> list = oneMapper.getOneById("1");
 		// openApiHttpClient.doPassSendArr(methodName, map)
 		Map<String,Object>map = new HashMap<String,Object>();
 		map.put("tel", "15850781443");
@@ -34,7 +34,11 @@ public class OneService implements IOneService {
 		redisService.put("beijing", "001", map);
 		Map<String,Object> map1 = redisService.get("beijing", "001", Map.class);
 		System.out.println(map1.get("tel"));
+		
+		
+		Map<String,Object> map2 =  redisService.get("sign", "2c787b20a453e00d365cb85612ce6d5d", Map.class);
+		System.out.println(map2.get("sign"));
 		//this.redisService.put("getMemberInfoCollection", memberId, Map.class);
-		return list;
+		return null;
 	}
 }

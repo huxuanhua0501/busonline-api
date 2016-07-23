@@ -3,15 +3,13 @@ package net.busonline.core.redis;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-
 public class RedisServiceImpl{
 
 	private static Logger logger = Logger.getLogger(RedisServiceImpl.class);
