@@ -35,10 +35,10 @@
 	<logger name="org.springframework" level="debug"  additivity="false">
 		<appender-ref ref="stdout" />
 	</logger>
-	<!-- <logger name="net.busonline.api.dao" level="DEBUG">
+	 <logger name="net.busonline.api.dao" level="DEBUG">
 	<appender-ref ref="logfile" />
 		<appender-ref ref="stdout" />
-</logger>  -->
+</logger>  
 	<!-- jdbc -->
 	 <logger name="org.springframework.jdbc.core.JdbcTemplate" additivity="false" level="DEBUG">
         <appender-ref ref="stdout" />

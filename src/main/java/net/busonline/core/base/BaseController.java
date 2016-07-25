@@ -35,7 +35,8 @@ public class BaseController {
 
 	protected String jsonSuccess(Object mapObject) {
 		Map<String, Object> allMap = new HashMap<String, Object>();
-		allMap.put("success", true);
+		allMap.put("state", 0);
+		allMap.put("sendTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		if (null != mapObject) {
 			allMap.put("data", mapObject);
 		}
