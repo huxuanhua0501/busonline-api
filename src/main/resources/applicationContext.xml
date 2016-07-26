@@ -35,7 +35,7 @@
 	<context:component-scan base-package="net.**.service" />
 	<context:component-scan base-package="net.**.util" />
 	
- 	<!-- 配置数据源 -->
+ 	 	<!-- 配置数据源 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<property name="url" value="${jdbc_url}" />
@@ -91,7 +91,6 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
@@ -113,6 +112,7 @@
 	
 			<!-- *********************redis相关配置*************************** -->
  	<bean id="redisService" class="net.busonline.core.redis.RedisServiceImpl"/>
+ 	<bean id="jedisManager" class="net.busonline.core.redis.JedisManager"/>
 	<context:property-placeholder location="classpath:/redis.properties"
 	ignore-unresolvable="true" />
 	<bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig"> 
@@ -147,6 +147,17 @@
   		</constructor-arg>
 	</bean>   -->
 	<!-- *********************redis相关配置*************************** -->
+	
+	
+
+    
+    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    <bean id = "jedisPool" class="redis.clients.jedis.JedisPool">
+      <constructor-arg index="0" ref="jedisConfig"/>
+      <constructor-arg index="1" value="${redis_addr}"/>
+      <constructor-arg index="2" value="${redis.port}" />
+      <constructor-arg index="3" value="2000"/>
+    </bean>
 	
 	
 	

@@ -6,14 +6,14 @@ import java.util.Map;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
- 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
- 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import net.busonline.api.service.InitCacheService;
+import net.busonline.core.redis.JedisManager;
 import net.busonline.core.redis.RedisServiceImpl;
 /**
  * 预加载签名信息
@@ -25,6 +25,8 @@ import net.busonline.core.redis.RedisServiceImpl;
 public class EhcacheListener implements ServletContextListener {
 	//cache层
 	private RedisServiceImpl redisService;
+//	@Autowired
+//	JedisManager jedisManager;
 	// 获取spring注入的bean对象
 	private WebApplicationContext springContext;
 	public static   Logger logger = LoggerFactory.getLogger(EhcacheListener.class);
@@ -46,6 +48,13 @@ public class EhcacheListener implements ServletContextListener {
 		logger.info("缓存企业签名信息方法开始");
 		springContext = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
 		redisService = (RedisServiceImpl) springContext.getBean("redisService");
+ 
+//		List<Map> List = (List<Map>) redisService.getAll("beijing_4", Map.class);
+//		 Map<String,Object> map1 = (Map<String,Object>) redisService.get
+//		jedisManager.get
+//		String str = jedisManager.get(0,"beijing_4");
+//		System.out.println(str);
+		
 		List<Map<String,Object>> list = ((InitCacheService) springContext.getBean("initCacheService")).getAllSign();
 		logger.info("数据库中签名信息的list集合===="+list);
 		if(net.busonline.core.util.PubMethod.isEmpty(list)){

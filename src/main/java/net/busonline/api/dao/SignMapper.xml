@@ -12,4 +12,11 @@
 		LEFT JOIN bus_line bl ON sl.line_id = bl.id
 		LEFT JOIN city  c ON bl.city_id = c.id
 	</select>
+	<select id="getLine" resultType="java.util.Map">
+		SELECT
+		    *
+	   FROM
+		 bus_line;
+	</select>
+	
 </mapper>

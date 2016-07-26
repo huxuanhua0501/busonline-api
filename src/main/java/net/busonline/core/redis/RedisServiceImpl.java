@@ -85,7 +85,8 @@ public class RedisServiceImpl{
 			return null;
 		}
 		
-		Set<Object> keys = redisTemplate.opsForHash().keys(cacheName);
+		Set<Object> keys = redisTemplate.opsForHash().keys("0");
+//		redisTemplate.opsForHash().get(arg0, arg1)
 		
 		List<T> datas = new ArrayList<T>();
 		
@@ -98,6 +99,9 @@ public class RedisServiceImpl{
 		
 		return datas;
 	}
+	
+	
+ 
 
 	
 	public void remove(String cacheName, String key) {
