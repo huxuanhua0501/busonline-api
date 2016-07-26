@@ -25,4 +25,44 @@
 		WHERE c.name_en=#{city}
 	</select>
 	
+	<select id="getLineByCityAndLine" resultType="java.util.Map">
+		SELECT
+			s.e_sign AS sign,
+			bl.line_id AS lineid,
+			c.name_en AS city,
+			IFNULL(bl.linegeo,'') AS linegeo,
+            bl.linkdir AS linkdir
+		FROM
+			sign s
+		LEFT JOIN sign_line sl ON s.id = sl.sign_id
+		LEFT JOIN bus_line bl ON sl.line_id = bl.id
+		LEFT JOIN city  c ON bl.city_id = c.id
+		WHERE c.name_en=#{city} AND 
+		    bl.id IN
+		   	<foreach  collection="data" item="item1" index="index" 
+	              open="(" separator="," close=")">
+	             #{item1}
+	        </foreach>
+	</select>
+	
+	
+	<select id="lineStop" resultType="java.util.Map">
+		SELECT
+			bs.id AS stopid,
+			bs.line_id AS lineid,
+			bs.stop_name AS stopname,
+			bs.lon AS lon,
+			bs.lat AS lat,
+			bs.stopseq AS stopseq,
+			bs.linedir AS linedir
+		FROM
+			bus_stop bs
+		WHERE
+			line_id  IN
+		   	<foreach  collection="data" item="item1" index="index" 
+	              open="(" separator="," close=")">
+	             #{item1}
+	        </foreach>
+	</select>
+	
 </mapper>
