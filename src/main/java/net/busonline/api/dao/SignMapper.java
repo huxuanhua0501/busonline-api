@@ -12,6 +12,6 @@ public interface SignMapper {
 	public List<Map<String,Object>> city(@Param("city")String city);
 	public String lineCity(@Param("city")String city,@Param("data")String data) ;
 	public List<Map<String,Object>> lineStop(@Param("city")String city,@Param("data")String data);
-	public List<Map<String,Object>> getLine();
+	public List<Map<String,Object>> getLine(@Param("city")String city);
 }
 

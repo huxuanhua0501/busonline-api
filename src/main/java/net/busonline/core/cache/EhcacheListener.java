@@ -24,7 +24,7 @@ import net.busonline.core.redis.RedisServiceImpl;
  */
 public class EhcacheListener implements ServletContextListener {
 	//cache层
-	private RedisServiceImpl redisService;
+//	private RedisServiceImpl redisService;
 //	@Autowired
 //	JedisManager jedisManager;
 	// 获取spring注入的bean对象
@@ -47,13 +47,13 @@ public class EhcacheListener implements ServletContextListener {
 	
 		logger.info("缓存企业签名信息方法开始");
 		springContext = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
-		redisService = (RedisServiceImpl) springContext.getBean("redisService");
+		//redisService = (RedisServiceImpl) springContext.getBean("redisService");
  
 //		List<Map> List = (List<Map>) redisService.getAll("beijing_4", Map.class);
 //		 Map<String,Object> map1 = (Map<String,Object>) redisService.get
 //		jedisManager.get
-//		String str = jedisManager.get(0,"beijing_4");
-//		System.out.println(str);
+		//String str = jedisManager.get(0,"beijing_4");
+		//System.out.println(str);
 		
 		List<Map<String,Object>> list = ((InitCacheService) springContext.getBean("initCacheService")).getAllSign();
 		logger.info("数据库中签名信息的list集合===="+list);
@@ -65,7 +65,7 @@ public class EhcacheListener implements ServletContextListener {
 				Map<String,Object>map = list.get(i);
 				//存放的格式
 				logger.info("存放的数据"+map);
-				redisService.put("sign", map.get("sign").toString(), map);
+				//redisService.put("sign", map.get("sign").toString(), map);
 			}
 			logger.info("扔数据结束");
 		}

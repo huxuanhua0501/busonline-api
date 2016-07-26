@@ -34,6 +34,7 @@
  <context:annotation-config/>
 	<context:component-scan base-package="net.**.service" />
 	<context:component-scan base-package="net.**.util" />
+	<import resource="applicationContext-redis.xml"/>
 	
  	 	<!-- 配置数据源 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -111,7 +112,7 @@
 	
 	
 			<!-- *********************redis相关配置*************************** -->
- 	<bean id="redisService" class="net.busonline.core.redis.RedisServiceImpl"/>
+ 	<!-- <bean id="redisService" class="net.busonline.core.redis.RedisServiceImpl"/>
  	<bean id="jedisManager" class="net.busonline.core.redis.JedisManager"/>
 	<context:property-placeholder location="classpath:/redis.properties"
 	ignore-unresolvable="true" />
@@ -130,7 +131,7 @@
 	</bean>
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
-		<!-- 如果不配置Serializer，那么存储的时候智能使用String，如果用User类型存储，那么会提示错误User can't cast to String！！！ -->
+		如果不配置Serializer，那么存储的时候智能使用String，如果用User类型存储，那么会提示错误User can't cast to String！！！
 		<property name="keySerializer">
 			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
 		</property>
@@ -139,19 +140,19 @@
 		</property>
 	</bean>	
 	
-	<!--   <bean id="redisConstant" class="net.busonline.core.redis.RedisConstant">
+	  <bean id="redisConstant" class="net.busonline.core.redis.RedisConstant">
 		<constructor-arg>
    			<map>
    				<entry key="recordCache" value="6000" />
    			</map>
   		</constructor-arg>
-	</bean>   -->
-	<!-- *********************redis相关配置*************************** -->
+	</bean>  
+	*********************redis相关配置***************************
 	
 	
 
     
-    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    redis的连接池pool，不是必选项：timeout/password 
     <bean id = "jedisPool" class="redis.clients.jedis.JedisPool">
       <constructor-arg index="0" ref="jedisConfig"/>
       <constructor-arg index="1" value="${redis_addr}"/>
@@ -161,7 +162,7 @@
 	
 	
 	
-	
+	 -->
 	
 	
 	

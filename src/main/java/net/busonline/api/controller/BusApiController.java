@@ -21,8 +21,9 @@ public class BusApiController extends BaseController {
 	 */
 	@RequestMapping(value = "city", method = { RequestMethod.POST, RequestMethod.GET })
 	public String city(String city) {
-		System.out.println(city);
-		return this.jsonSuccess("");
+//		System.out.println(city);
+//		busApiService.city(city);
+		return this.jsonSuccess(busApiService.city(city));
 	}
 
 	@RequestMapping(value = "linecity", method = { RequestMethod.POST, RequestMethod.GET })
