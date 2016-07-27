@@ -5,7 +5,9 @@
 		SELECT
 			s.e_sign AS sign,
 			bl.line_id AS lineId,
-			c.name_en AS city
+			c.name_en AS city,
+			bl.id,
+            bl.linkdir
 		FROM
 			sign s
 		LEFT JOIN sign_line sl ON s.id = sl.sign_id

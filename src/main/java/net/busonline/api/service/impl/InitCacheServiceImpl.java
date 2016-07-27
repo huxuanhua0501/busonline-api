@@ -13,29 +13,24 @@ import net.busonline.api.service.InitCacheService;
 import net.busonline.core.cache.EhcacheListener;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-
+/**
+ * 预加载所有sign(签名线路)线路
+ * 
+ * @author xuanhua.hu
+ *
+ */
 @Service("initCacheService")
 public class InitCacheServiceImpl implements InitCacheService {
 //	public static   Logger logger = LoggerFactory.getLogger(EhcacheListener.class);
 	@Autowired
 	private SignMapper signMapper;
-	@Autowired
-	private JedisPool jedisPool; 
+//	@Autowired
+//	private JedisPool jedisPool; 
 
 	@Override
 	public List<Map<String, Object>> getAllSign() {
 		// TODO Auto-generated method stub
-		Jedis jedis = jedisPool.getResource();
-		try {
-		 
-//				jedis.select(0);
-//				jedis.set("dddd", "nimeidefadfa");
-			jedis.select(0);
-			String value = jedis.get("dddd");
-			System.out.println(value);
-		} finally {
-			jedisPool.returnResource(jedis);
-		}
+ 
 		return signMapper.getAllSign();
 	}
 

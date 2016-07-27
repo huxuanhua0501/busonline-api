@@ -13,10 +13,10 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import net.busonline.api.service.InitCacheService;
-import net.busonline.core.redis.JedisManager;
-import net.busonline.core.redis.RedisServiceImpl;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 /**
- * 预加载签名信息
+ * 预加载签名信息,将信息存放在redis中
  * @version 1.0.0
  * @2016-7-23
  * @author xuanhua.hu
@@ -25,8 +25,8 @@ import net.busonline.core.redis.RedisServiceImpl;
 public class EhcacheListener implements ServletContextListener {
 	//cache层
 //	private RedisServiceImpl redisService;
-//	@Autowired
-//	JedisManager jedisManager;
+	@Autowired
+	private JedisPool jedisPool;
 	// 获取spring注入的bean对象
 	private WebApplicationContext springContext;
 	public static   Logger logger = LoggerFactory.getLogger(EhcacheListener.class);
@@ -66,6 +66,7 @@ public class EhcacheListener implements ServletContextListener {
 				//存放的格式
 				logger.info("存放的数据"+map);
 				//redisService.put("sign", map.get("sign").toString(), map);
+			 
 			}
 			logger.info("扔数据结束");
 		}
@@ -80,5 +81,16 @@ public class EhcacheListener implements ServletContextListener {
 
 	}
 
-
+	public void set(int dbIndex, String key,String field, String value) {
+	 
+	Jedis jedis = jedisPool.getResource();
+	try {
+		jedis.select(dbIndex);
+		 jedis.set("1231", "qeq");
+//		jedis.hmset("", hash)
+	} finally {
+		jedisPool.returnResource(jedis);
+	}
+	 
+}
 }
