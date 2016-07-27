@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import net.busonline.api.dao.SignMapper;
 import net.busonline.api.service.InitCacheService;
-import net.busonline.core.redis.RedisServiceImpl;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 /**
