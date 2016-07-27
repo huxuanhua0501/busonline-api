@@ -4,7 +4,7 @@
 	<select id="getAllSign" resultType="java.util.Map">
 		SELECT
 			    IFNULL(s.e_sign,'') AS sign,
-				IFNULL(bl.line_id,'') AS lineId,
+				IFNULL(bl.line_id,'') AS lineid,
 				IFNULL(c.name_en,'') AS city,
 				IFNULL(bl.id,'') AS id,
              	IFNULL( bl.linkdir,'') AS linkdir
@@ -17,7 +17,7 @@
 	<select id="getLine" resultType="java.util.Map">
 		SELECT
 			s.e_sign AS sign,
-			bl.line_id AS lineId,
+			bl.line_id AS lineid,
 			c.name_en AS city
 		FROM
 			sign s

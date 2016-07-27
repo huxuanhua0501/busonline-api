@@ -16,17 +16,17 @@ import net.busonline.core.datasource.JDBCUtils;
 public class BusLineDao extends JDBCUtils{
 	public static   Logger logger = LoggerFactory.getLogger(BusLineDao.class);
 	/**
-	 * 运用第一个city接口，通过lineId调取基础库的线路名字和线路id
-	 * @param lineId
+	 * 运用第一个city接口，通过lineid调取基础库的线路名字和线路id
+	 * @param lineid
 	 * @author xuanhua.hu
 	 * @return
 	 */
-	public   List<Map<String,Object>> getLineByID(String lineId){
+	public   List<Map<String,Object>> getLineByID(String lineid){
 		  ConcurrentHashMap<String,Object> map= new ConcurrentHashMap<String,Object>();
 		  List<Map<String,Object>>list = new ArrayList<Map<String,Object>>();
 		try {
 			con = this.getConnection();
-			String sql = "SELECT id,name FROM bus_line where id in ("+lineId+")";
+			String sql = "SELECT id,name FROM bus_line where id in ("+lineid+")";
 			logger.info("sql===="+BusLineDao.class+list);
 			pre = con.prepareStatement(sql);
 			res = pre.executeQuery();
@@ -57,18 +57,18 @@ public class BusLineDao extends JDBCUtils{
 	}
 	
 	/**
-	 * 运用第3个linestop接口，通过lineId调取基础库的线路名字和线路id,
+	 * 运用第3个linestop接口，通过lineid调取基础库的线路名字和线路id,
 	 * 然后将数据合并baiduku中查询的线路。整合正一个有上下行的完整线路数据
-	 * @param lineId
+	 * @param lineid
 	 * @author xuanhua.hu
 	 * @return
 	 */
-	public   List<Map<String,Object>> getLineByID(String lineId,List<Map<String,Object>>list1){
+	public   List<Map<String,Object>> getLineByID(String lineid,List<Map<String,Object>>list1){
 		  ConcurrentHashMap<String,Object> map= new ConcurrentHashMap<String,Object>();
 		  List<Map<String,Object>>list = new ArrayList<Map<String,Object>>();
 		try {
 			con = this.getConnection();
-			String sql = "SELECT id,name FROM bus_line where id in ("+lineId+")";
+			String sql = "SELECT id,name FROM bus_line where id in ("+lineid+")";
 			logger.info("sql===="+BusLineDao.class+list);
 			pre = con.prepareStatement(sql);
 			res = pre.executeQuery();

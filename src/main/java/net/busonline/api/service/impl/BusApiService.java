@@ -65,11 +65,11 @@ public class BusApiService extends BaseService implements IBusApiService {
 		logger.info("调取baidu库中查询的线路数据" + BusApiService.class + list);
 		StringBuilder sb = new StringBuilder("");
 		for (Map<String, Object> map : list) {
-			sb.append(map.get("lineId")).append(",");
+			sb.append(map.get("lineid")).append(",");
 		}
-		String lineId = sb.deleteCharAt(sb.length() - 1).toString();
+		String lineid = sb.deleteCharAt(sb.length() - 1).toString();
 		BusLineDao dao = new BusLineDao();
-		List<Map<String, Object>> map = dao.getLineByID(lineId);
+		List<Map<String, Object>> map = dao.getLineByID(lineid);
 		logger.info("带去基础库里调取的线路数据" + BusApiService.class + map);
 
 		return jsonSuccess(map);
@@ -154,9 +154,9 @@ public class BusApiService extends BaseService implements IBusApiService {
 		for (Map<String, Object> map : list) {
 			sb.append(map.get("lineid")).append(",");
 		}
-		String lineId = sb.deleteCharAt(sb.length() - 1).toString();
+		String lineid = sb.deleteCharAt(sb.length() - 1).toString();
 		BusLineDao dao = new BusLineDao();
-		List<Map<String, Object>> list2 = dao.getLineByID(lineId, list);
+		List<Map<String, Object>> list2 = dao.getLineByID(lineid, list);
 		List<Map<String, Object>> list3 = signMapper.lineStop(strs);
 		logger.info("调取baidu库中查询的站点数据" + BusApiService.class + list3);
 		Map<String, Object> map3 = new HashMap<String, Object>();
