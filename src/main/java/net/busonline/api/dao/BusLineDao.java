@@ -75,11 +75,11 @@ public class BusLineDao extends JDBCUtils{
 			res.beforeFirst();
 			while (res.next()) {
 				map= new ConcurrentHashMap<String,Object>();
-				map.put("dplLine", res.getInt("id"));
+//				map.put("dplLine", res.getInt("id"));
 				map.put("name", res.getString("name"));
 //				System.out.println(res.getInt("id")+res.getString("name"));
 				for(int i = 0;i<list1.size() ;i++){
-					list1.get(i).get("lineid").equals(map.get("dplLine"));
+					list1.get(i).get("lineid").equals(res.getInt("id"));
 					list1.get(i).putAll(map);
 					logger.info("合并基础库和baidu库的线路数据===="+BusLineDao.class, list1);
 				}

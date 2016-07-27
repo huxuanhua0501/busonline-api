@@ -147,7 +147,12 @@ public class BusApiService extends BaseService implements IBusApiService {
 			return this.jsonFailure();
 		}
 		String[] strs = data.split("\\|");
-		List<Map<String, Object>> list = signMapper.getLineByCityAndLine(city, strs);
+		List<Map<String, Object>> idlist  = signMapper.findidByLineid(city, strs);
+		String[]datastr = new String[idlist.size()];
+		for(int i= 0 ;i<idlist.size();i++){
+			datastr[i] = idlist.get(i).get("id").toString();
+		}
+		List<Map<String, Object>> list = signMapper.getLineByCityAndLine(city, datastr);
 		logger.info("调取baidu库中查询的线路数据" + BusApiService.class + list);
 		System.out.println(list);
 		StringBuilder sb = new StringBuilder("");
@@ -157,7 +162,7 @@ public class BusApiService extends BaseService implements IBusApiService {
 		String lineid = sb.deleteCharAt(sb.length() - 1).toString();
 		BusLineDao dao = new BusLineDao();
 		List<Map<String, Object>> list2 = dao.getLineByID(lineid, list);
-		List<Map<String, Object>> list3 = signMapper.lineStop(strs);
+		List<Map<String, Object>> list3 = signMapper.lineStop(datastr);
 		logger.info("调取baidu库中查询的站点数据" + BusApiService.class + list3);
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		map3.put("line", list2);

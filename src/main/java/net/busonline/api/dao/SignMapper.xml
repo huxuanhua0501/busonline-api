@@ -47,6 +47,23 @@
 	</select>
 	
 	
+	
+		<select id="findidByLineid" resultType="java.util.Map">
+			SELECT
+				bl.id AS id
+			FROM
+				sign s
+			LEFT JOIN sign_line sl ON s.id = sl.sign_id
+			LEFT JOIN bus_line bl ON sl.line_id = bl.id
+			LEFT JOIN city  c ON bl.city_id = c.id
+			WHERE c.name_en='beijing' AND 
+				 bl.line_id   IN
+			   	<foreach  collection="data" item="item1" index="index" 
+		              open="(" separator="," close=")">
+		             #{item1}
+		        </foreach>
+	</select>
+	
 	<select id="lineStop" resultType="java.util.Map">
 		SELECT
 			bs.id AS stopid,
