@@ -113,7 +113,8 @@
 	
 	
 			<!-- *********************redis相关配置*************************** -->
- 	<!-- <bean id="redisService" class="net.busonline.core.redis.RedisServiceImpl"/>
+			<bean id="redisService" class="net.busonline.core.redis.RedisServiceImpl"/>
+ 	<!-- 
  	<bean id="jedisManager" class="net.busonline.core.redis.JedisManager"/>
 	<context:property-placeholder location="classpath:/redis.properties"
 	ignore-unresolvable="true" />
