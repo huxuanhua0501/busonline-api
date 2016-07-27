@@ -38,11 +38,15 @@ public class InitCacheServiceImpl implements InitCacheService {
 			logger.info("数据为空，sql或者数据数据有问题");
 		}else{
 			logger.info("开始循环遍历数据，准备往redis中扔数据,结构为map集合");
+			StringBuilder sb = new StringBuilder("");
 			for(int i = 0 ;i<list.size();i++){
 				Map<String,String>map = list.get(i);
 				//存放的格式
 				logger.info("存放的数据"+map);
+//				if(list.get)
+				
 				this.set(2, map.get("id"), map);
+				this.seth(2,map.get("city"), map.get("sign"), map.toString());
 			}
 		 
 			logger.info("扔数据结束");
@@ -80,7 +84,6 @@ public class InitCacheServiceImpl implements InitCacheService {
 //	}
 //	
 	public void set(int dbIndex, String key, Map<String,String>hash) {
-	List<String> vals = null;
 	Jedis jedis = jedisPool.getResource();
 	try {
 		jedis.select(dbIndex);
@@ -88,7 +91,17 @@ public class InitCacheServiceImpl implements InitCacheService {
 	} finally {
 		jedisPool.returnResource(jedis);
 	}
-	 
+	}
+	public void seth(int dbIndex, String key, String field,String value) {
+	Jedis jedis = jedisPool.getResource();
+	try {
+		jedis.select(dbIndex);
+		 jedis.hset(key, field, value);
+	} finally {
+		jedisPool.returnResource(jedis);
+	}
+	 	
+	
 }
 //	
 //	public String get(int dbIndex, String key) {

@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import net.busonline.api.service.IBusApiService;
 import net.busonline.core.base.BaseController;
 import net.busonline.core.cache.EhcacheListener;
-
+/**
+ * 百度对接的三个接口，详细busonline-api\word，百度提供的文档
+ * @author xuanhua.hu
+ *
+ */
 @RestController
 @RequestMapping("/busapi")
-public class BusApiController extends BaseController {
+public class BusApiController{
 	public static   Logger logger = LoggerFactory.getLogger(BusApiController.class);
 	@Autowired
 	private IBusApiService busApiService;
@@ -46,9 +50,9 @@ public class BusApiController extends BaseController {
 		｝
 	 */
 	@RequestMapping(value = "city", method = { RequestMethod.POST, RequestMethod.GET })
-	public String city(String city) {
+	public String city(String city,String sign) {
 		logger.info("通过调取城市名字，进而返回跟百度合作的线路调取出来，接口进入city="+city);
-		return this.jsonSuccess(busApiService.getLine(city));
+		return  busApiService.city(city,sign);
 	}
 /**
  * 通过城市和线路id查询每台设备的单位数据,这频率较大初定10秒一次，
@@ -90,9 +94,9 @@ public class BusApiController extends BaseController {
  * @return
  */
 	@RequestMapping(value = "linecity", method = { RequestMethod.POST, RequestMethod.GET })
-	public String lineCity(String city, String data) {
+	public String lineCity(String city, String data,String sign) {
 		logger.info("通过城市和线路id查询每台设备的单位数据,这频率较大初定10秒一次,接口进入参数：city="+city+",data="+data);
-		return this.jsonSuccess(busApiService.lineCity(city, data));
+		return  busApiService.linecity(city, data,sign);
 	}
 
 	/**
@@ -161,8 +165,8 @@ public class BusApiController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "linestop", method = { RequestMethod.POST, RequestMethod.GET })
-	public String lineStop(String city, String data) {
+	public String lineStop(String city, String data,String sign) {
 		logger.info(" 城市&线路站点查询接口,接口进入参数：city="+city+",data="+data);
-		return this.jsonSuccess(busApiService.lineStop(city, data));
+		return  busApiService.linestop(city, data,sign);
 	}
 }

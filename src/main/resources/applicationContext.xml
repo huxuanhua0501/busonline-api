@@ -194,14 +194,7 @@
 	</bean>
 	
 	
-	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxIdle" value="${config.redis.pool.maxIdle}" />
-		<property name="maxTotal" value="${config.redis.pool.maxTotal}" />
-		<property name="maxWaitMillis" value="${config.redis.pool.maxWaitMillis}" />
-		<property name="testOnBorrow" value="${config.redis.pool.testOnBorrow}" />
-		<property name="testOnReturn" value="${config.redis.pool.testOnReturn}" />
-	</bean>
-
+	 
 	
 	
 	<beans profile="dev">

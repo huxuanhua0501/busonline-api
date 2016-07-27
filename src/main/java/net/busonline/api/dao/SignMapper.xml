@@ -29,9 +29,8 @@
 	
 	<select id="getLineByCityAndLine" resultType="java.util.Map">
 		SELECT
-			s.e_sign AS sign,
+			 
 			bl.line_id AS lineid,
-			c.name_en AS city,
 			IFNULL(bl.linegeo,'') AS linegeo,
             bl.linkdir AS linkdir
 		FROM
