@@ -40,9 +40,11 @@ public class BusApiService extends BaseService implements IBusApiService {
 	@Override
 	public String city(String city, String sign)  throws ServiceException {
 		if (PubMethod.isEmpty(city)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.city.001", "城市参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.city.001", "城市参数异常");
 		}
 		if (PubMethod.isEmpty(sign)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.city.002", "sign参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.city.002", "sign参数异常");
 		}
 		// 调取redis数据
@@ -81,12 +83,15 @@ public class BusApiService extends BaseService implements IBusApiService {
 	@Override
 	public String linecity(String city, String data, String sign)  throws ServiceException {
 		if (PubMethod.isEmpty(city)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.linecity.001", "城市参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.linecity.001", "城市参数异常");
 		}
 		if (PubMethod.isEmpty(data)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.linecity.002", "线路参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.linecity.002", "线路参数异常");
 		}
 		if (PubMethod.isEmpty(sign)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.linecity.003", "sign参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.linecity.003", "sign参数异常");
 		}
 		// TODO Auto-generated method stub
@@ -118,12 +123,15 @@ public class BusApiService extends BaseService implements IBusApiService {
 	@Override
 	public String linestop(String city, String data, String sign)  throws ServiceException {
 		if (PubMethod.isEmpty(city)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.linestop.001", "城市参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.linestop.001", "城市参数异常");
 		}
 		if (PubMethod.isEmpty(data)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.linestop.002", "线路参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.linestop.002", "线路参数异常");
 		}
 		if (PubMethod.isEmpty(sign)) {
+			logger.info("net.busonline.api.service.impl.BusApiService.linestop.003", "sign参数异常");
 			throw new ServiceException("net.busonline.api.service.impl.BusApiService.linestop.003", "sign参数异常");
 		}
 		// TODO Auto-generated method stub
