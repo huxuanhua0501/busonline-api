@@ -42,12 +42,7 @@ public class InitCacheServiceImpl implements InitCacheService {
 				Map<String,String>map = list.get(i);
 				//存放的格式
 				logger.info("存放的数据"+map);
-//				String s = hvals(0, "beijing1111_1");
-//				System.out.println(s);
-//				Map<String,String>map2 = new HashMap<String,String>();
-//				map2.put("fdsf", "sdfsd");
-				this.set(2, "map2", map);
-			System.out.println(this.get(2, "map2"));
+				this.set(2, map.get("id"), map);
 			}
 		 
 			logger.info("扔数据结束");
@@ -58,32 +53,32 @@ public class InitCacheServiceImpl implements InitCacheService {
 		}
 	}
 	
-	public String hvals(int dbIndex, String key) {
-		String value = null;
-		Jedis jedis = jedisPool.getResource();
-		try {
-			jedis.select(dbIndex);
-			List<String> d = jedis.hvals(key);
-			value = d.toString();
-//			value = jedis.get(key);
-		} finally {
-			jedisPool.returnResource(jedis);
-		}
-		return value;
-	}
-	
-	public String hset(int dbIndex, String key, String field, String value) {
-		Jedis jedis = jedisPool.getResource();
-		try {
-			jedis.select(dbIndex);
-			jedis.hset(key, field, value);
-		} finally {
-			jedisPool.returnResource(jedis);
-
-		}
-		return value;
-	}
-	
+//	public String hvals(int dbIndex, String key) {
+//		String value = null;
+//		Jedis jedis = jedisPool.getResource();
+//		try {
+//			jedis.select(dbIndex);
+//			List<String> d = jedis.hvals(key);
+//			value = d.toString();
+////			value = jedis.get(key);
+//		} finally {
+//			jedisPool.returnResource(jedis);
+//		}
+//		return value;
+//	}
+//	
+//	public String hset(int dbIndex, String key, String field, String value) {
+//		Jedis jedis = jedisPool.getResource();
+//		try {
+//			jedis.select(dbIndex);
+//			jedis.hset(key, field, value);
+//		} finally {
+//			jedisPool.returnResource(jedis);
+//
+//		}
+//		return value;
+//	}
+//	
 	public void set(int dbIndex, String key, Map<String,String>hash) {
 	List<String> vals = null;
 	Jedis jedis = jedisPool.getResource();
@@ -95,17 +90,17 @@ public class InitCacheServiceImpl implements InitCacheService {
 	}
 	 
 }
-	
-	public String get(int dbIndex, String key) {
-		List<String> vals = null;
-		Jedis jedis = jedisPool.getResource();
-		try {
-			jedis.select(dbIndex);
-		 
-			vals = jedis.hvals(key);
-		} finally {
-			jedisPool.returnResource(jedis);
-		}
-		return vals.toString();
-	}
+//	
+//	public String get(int dbIndex, String key) {
+//		List<String> vals = null;
+//		Jedis jedis = jedisPool.getResource();
+//		try {
+//			jedis.select(dbIndex);
+//		 
+//			vals = jedis.hvals(key);
+//		} finally {
+//			jedisPool.returnResource(jedis);
+//		}
+//		return vals.toString();
+//	}
 }
