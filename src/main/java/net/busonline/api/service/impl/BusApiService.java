@@ -117,7 +117,7 @@ public class BusApiService extends BaseService implements IBusApiService {
 			list.add(str);
 		}
 		
-     logger.info("city返回数据"+jsonSuccess(list));
+     logger.info("linecity返回数据"+jsonSuccess(list));
         
 		return jsonSuccess(list);
 	}
