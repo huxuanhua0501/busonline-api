@@ -1,22 +1,28 @@
 package net.busonline.core.datasource;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import javax.sql.DataSource;
+
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
+import ch.qos.logback.core.db.dialect.DBUtil;
 
 public class JDBCUtils {
-	 private static DruidDataSource dataSource  = new DruidDataSource();
-	   protected Connection con = null;
+	  private static DataSource dataSource = null;	
+	   protected Connection con = null; 
 		protected PreparedStatement pre = null;
 		protected ResultSet res = null;
 	    //声明线程共享变量
 	    public static ThreadLocal<Connection> container = new ThreadLocal<Connection>();
 	    //配置说明，参考官方网址
 	    //http://blog.163.com/hongwei_benbear/blog/static/1183952912013518405588/
-	    static{
+/*	    static{
 	        dataSource.setUrl("jdbc:mysql://192.168.108.145:3306/cctv_dev?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true");
 	        dataSource.setUsername("xuanhua.hu");//用户名
 	        dataSource.setPassword("1234qwer");//密码
@@ -28,7 +34,20 @@ public class JDBCUtils {
 	        dataSource.setTestOnBorrow(false);
 	        dataSource.setTestWhileIdle(true);
 	        dataSource.setPoolPreparedStatements(false);
-	    }
+	    }*/
+	    
+	    
+	    static {
+			try{
+				InputStream in = DBUtil.class.getClassLoader()
+						               .getResourceAsStream("ds.properties");
+	            Properties props = new Properties();
+				props.load(in);
+				dataSource = DruidDataSourceFactory.createDataSource(props);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
 	 
 	    /**
 	     * 获取数据连接
