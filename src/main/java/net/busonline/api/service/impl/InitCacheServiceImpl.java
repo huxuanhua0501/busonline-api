@@ -45,7 +45,7 @@ public class InitCacheServiceImpl implements InitCacheService {
 				logger.info("存放的数据"+map);
 //				if(list.get)
 				
-				this.set(2, map.get("id"), map);
+//				this.set(2, map.get("id"), map);
 				this.seth(2,map.get("city"), map.get("sign"), map.toString());
 			}
 		 

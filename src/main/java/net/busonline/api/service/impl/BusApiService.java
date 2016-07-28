@@ -151,6 +151,10 @@ public class BusApiService extends BaseService implements IBusApiService {
 		}
 		String[] strs = data.split("\\|");
 		List<Map<String, Object>> idlist  = signMapper.findidByLineid(city, strs);
+		if(idlist.size()==0){
+			logger.debug("net.busonline.api.service.impl.BusApiService.linestop.004===线路不匹配异常");
+			return this.jsonFailure2();
+		}
 		String[]datastr = new String[idlist.size()];
 		for(int i= 0 ;i<idlist.size();i++){
 			datastr[i] = idlist.get(i).get("id").toString();
