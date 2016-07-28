@@ -71,8 +71,8 @@ public class BusApiService extends BaseService implements IBusApiService {
 		String lineid = sb.deleteCharAt(sb.length() - 1).toString();
 		BusLineDao dao = new BusLineDao();
 		List<Map<String, Object>> map = dao.getLineByID(lineid);
-		logger.info("带去基础库里调取的线路数据" + BusApiService.class + map);
-
+		logger.info("city返回数据"+jsonSuccess(map));
+        
 		return jsonSuccess(map);
 	}
 
@@ -116,7 +116,10 @@ public class BusApiService extends BaseService implements IBusApiService {
 			String str = get(0, city + "_" + s);
 			list.add(str);
 		}
-		return list.toString();
+		
+     logger.info("city返回数据"+jsonSuccess(list));
+        
+		return jsonSuccess(list);
 	}
 
 	/**
@@ -174,7 +177,7 @@ public class BusApiService extends BaseService implements IBusApiService {
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		map3.put("line", list2);
 		map3.put("stop", list3);
-
+		logger.info("linestop返回数据"+jsonSuccess(map3));
 		return this.jsonSuccess(map3);
 	}
 
