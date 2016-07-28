@@ -57,6 +57,7 @@ public class BusApiService extends BaseService implements IBusApiService {
 		nullArr.add(null);
 		redisList.removeAll(nullArr);// 移除空null
 		if (redisList.size() == 0) {
+			logger.debug("city====="+this.jsonFailure());
 			return this.jsonFailure();
 		}
 
@@ -105,6 +106,7 @@ public class BusApiService extends BaseService implements IBusApiService {
 		nullArr.add(null);
 		redisList.removeAll(nullArr);// 移除空null
 		if (redisList.size() == 0) {
+			logger.debug("linecity====="+this.jsonFailure());
 			return this.jsonFailure();
 		}
 		String[] strs = data.split("\\|");
@@ -144,6 +146,7 @@ public class BusApiService extends BaseService implements IBusApiService {
 		nullArr.add(null);
 		redisList.removeAll(nullArr);// 移除空null
 		if (redisList.size() == 0) {
+			logger.debug("linestop====="+this.jsonFailure());
 			return this.jsonFailure();
 		}
 		String[] strs = data.split("\\|");
