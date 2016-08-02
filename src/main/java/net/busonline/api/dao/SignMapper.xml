@@ -67,7 +67,7 @@
 	<select id="lineStop" resultType="java.util.Map">
 		SELECT
 			bs.id AS stopid,
-			bs.line_id AS lineid,
+			bl.line_id AS lineid,
 			bs.stop_name AS stopname,
 			bs.lon AS lon,
 			bs.lat AS lat,
@@ -75,8 +75,9 @@
 			bs.linedir AS linedir
 		FROM
 			bus_stop bs
+      LEFT JOIN bus_line bl ON  bs.line_id=bl.id
 		WHERE
-			line_id  IN
+			bs.line_id IN
 		   	<foreach  collection="data" item="item1" index="index" 
 	              open="(" separator="," close=")">
 	             #{item1}
