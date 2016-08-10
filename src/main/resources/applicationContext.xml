@@ -36,6 +36,7 @@
 	<context:component-scan base-package="net.**.util" />
 	<context:component-scan base-package="net.**.cache" />
 	<import resource="applicationContext-redis.xml"/>
+	<import resource="spring-quartz.xml"/>
 	
  	 	<!-- 配置数据源 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"

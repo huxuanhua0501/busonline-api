@@ -84,4 +84,22 @@
 	        </foreach>
 	</select>
 	
+	<select id="startingStop" resultType="java.util.Map">
+	   SELECT
+		    IFNULL(bl.line_id,'')AS lineid,
+		    IFNULL(bl.line_name,'') AS linename,
+		    IFNULL(bs.name,'') AS stopname,
+		    IFNULL(bs.lon ,'')AS lon,
+		    IFNULL(bs.blat ,'')AS  blat,
+		    IFNULL(bs.linedir,'') AS linedir
+		
+		FROM
+			`bus_stop` bs
+		LEFT JOIN bus_line bl ON bs.line_id = bl.id
+		WHERE
+			bs.stopseq = 1;
+	
+	
+	</select>
+	
 </mapper>

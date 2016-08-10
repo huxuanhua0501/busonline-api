@@ -16,5 +16,6 @@ public interface SignMapper {
 	public List<Map<String,Object>> getLine(@Param("city")String city);
 	public List<Map<String,Object>> getLineByCityAndLine(@Param("city")String city,@Param("data")String[] data);
 	public List<Map<String,Object>> findidByLineid(@Param("city")String city,@Param("data")String[] data);
+	public List<Map<String,String>> startingStop();
 }
 
