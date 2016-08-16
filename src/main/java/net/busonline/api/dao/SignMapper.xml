@@ -90,7 +90,7 @@
 		    IFNULL(bl.line_name,'') AS linename,
 		    IFNULL(bs.name,'') AS stopname,
 		    IFNULL(bs.lon ,'')AS lon,
-		    IFNULL(bs.blat ,'')AS  blat,
+		    IFNULL(bs.lat ,'')AS  lat,
 		    IFNULL(bs.linedir,'') AS linedir
 		
 		FROM
